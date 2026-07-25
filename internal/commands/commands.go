@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"fmt"
+
 	state "github.com/JaygnatBuilds/gator_aggregator/internal/state"
 )
 
@@ -10,5 +12,12 @@ type command struct {
 }
 
 func handlerLogin(s *state.State, cmd command) error {
+
+	// if command argument slice is empty return an error
+	if len(cmd.args) == 0 {
+		return fmt.Errorf("Login command expects username parameter.")
+	}
+
+	return nil
 
 }
