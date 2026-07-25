@@ -27,7 +27,8 @@ func resolveConfigPath(fileName string) (string, error) {
 
 }
 
-func writeConfig(cfg *Config) error {
+// write config settings to config file
+func writeConfig(cfg Config) error {
 
 	// resolve full filepath
 	full_filepath, err := resolveConfigPath(configFileName)
@@ -57,6 +58,15 @@ func writeConfig(cfg *Config) error {
 
 }
 
+// set config struct username field and write struct to config json files
+func (cfg *Config) SetUser(username string) error {
+
+	// set struct username field
+	cfg.DB_USR = username
+
+	return writeConfig(*cfg)
+}
+
 // Read JSON config file info into Config struct
 func ReadConfig() (*Config, error) {
 
@@ -83,24 +93,4 @@ func ReadConfig() (*Config, error) {
 	}
 
 	return &config, err
-}
-
-func (cfg Config) SetUser(username string) error {
-
-	// read current config into struct
-	config, err := ReadConfig()
-	if err != nil {
-		return err
-	}
-
-	// set struct username field
-	config.DB_USR = username
-
-	// write struct with username back to json file
-	err = writeConfig(config)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }
