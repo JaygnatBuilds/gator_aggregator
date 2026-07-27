@@ -18,6 +18,12 @@ func handlerLogin(s *state.State, cmd command) error {
 		return fmt.Errorf("Login command expects username parameter.")
 	}
 
+	// retrieve username from command args
+	user := cmd.args[0]
+
+	// update username field in config struct
+	s.Config.DB_USR = user
+
 	return nil
 
 }
